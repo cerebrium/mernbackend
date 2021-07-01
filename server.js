@@ -1,28 +1,35 @@
 require('dotenv')
-
-const express = require('express');
-const app = express();
-const cors = require('cors');
-
+require('./config/config');
 require('dotenv').config()
 
+const express = require('express');
+const cors = require('cors');
+const { ApolloServer } = require('apollo-server');
+
+const typeDefs = require('./schema/schema')
+const resolvers = require('./resolvers/resolvers')
+const { Listings } = require('./models/model');
+
 const port = process.env.PORT || 5000
+
+
+// instantiate the apollo server
+const server = new ApolloServer({ 
+    typeDefs, 
+    resolvers,
+    tracing: true
+});
+
+// instantiate the express app after the apollo server
+const app = express();
 
 // middleware
 app.use(cors())
 app.use(express.json())
-app.use(require("./routes/record"))
+app.use(require("./routes/listings"))
 
-// driver connection
-const dbo = require('./db/conn')
+server.applyMiddleware({ app });
 
-app.listen(port, () => {
-    // connect to database when server starts
-    dbo.connectToServer(function (err) {
-        if (err) console.log(err)
-    })
-
-    // else
-    console.log(`server running on port: ${port}`)
+app.listen(() => {
+    console.log(`server listening on port: ${port}`)
 })
-
