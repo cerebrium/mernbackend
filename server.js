@@ -1,16 +1,14 @@
-require('dotenv')
 require('./config/config');
 require('dotenv').config()
 
 const express = require('express');
 const cors = require('cors');
-const { ApolloServer } = require('apollo-server');
+const { ApolloServer } = require('apollo-server-express');
 
 const typeDefs = require('./schema/schema')
 const resolvers = require('./resolvers/resolvers')
-const { Listings } = require('./models/model');
 
-const port = process.env.PORT || 5000
+const port = process.env.PORT || 4000
 
 
 // instantiate the apollo server
@@ -31,5 +29,5 @@ app.use(require("./routes/listings"))
 server.applyMiddleware({ app });
 
 app.listen(() => {
-    console.log(`server listening on port: ${port}`)
+    console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)
 })

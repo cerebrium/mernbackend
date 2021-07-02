@@ -1,9 +1,9 @@
-const { gql } = require('apollo-server')
+const { gql } = require('apollo-server-express')
 const { Listings } = require('../models/model')
 
 const typeDefs = gql`
     type Query {
-        getListings: [Listings]
+        getListings: [Listing]
     }
 
     type Amenities {
