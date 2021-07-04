@@ -1,15 +1,19 @@
-const { paginateResults } = require('../utils/utils');
-const { Data } = require('../config/config')
+const { Apartments } = require('../models/model')
 
-module.exports = {
+const resolvers = {
     Query: {
-        getListings: (root) => {
-            return new Promise((resolve, reject) => {
-                Listings.find((err, listings) => {
-                    if (err) reject(err);
-                    else resolve(listings);
-                })
-            })
+        getApartments: async () => await Apartments.find({}).exec()
+    },
+    Mutation: {
+        addApartment: async (_, args) => {
+            try {
+                let response = await Apartments.create(args)
+                return response
+            } catch(e) {
+                return e.message
+            }
         }
     }
 }
+
+module.exports = resolvers

@@ -1,19 +1,15 @@
-require('./config/config');
 require('dotenv').config()
 
 const express = require('express');
 const cors = require('cors');
-const { ApolloServer } = require('apollo-server-express');
-const mongoose = require("mongoose")
+const { ApolloServer, gql } = require('apollo-server-express');
 
 // grapqhl 
 const typeDefs = require('./schema/schema')
-const resolvers = require('./resolvers/resolvers')
+const resolvers = require('./resolvers/resolvers');
 
 // env strings
 const port = process.env.PORT || 4000
-const url = process.env.MONGO_STRING;
-
 
 // instantiate the apollo server
 const server = new ApolloServer({ 
@@ -22,22 +18,6 @@ const server = new ApolloServer({
     tracing: true
 });
 
-// connect to mongo atlas
-
-mongoose.connect(url, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true 
-    }
-);
-
-mongoose.connection.on('error', function (err) {
-    console.log("error connectiong to database: ", err)
-})
-
-mongoose.connection.on("open", function() {
-    console.log('successfully connected to mongo atlas')
-})
-
 // instantiate the express app after the apollo server
 const app = express();
 
@@ -45,9 +25,16 @@ const app = express();
 app.use(cors())
 app.use(express.json())
 app.use(require("./routes/listings"))
+app.use(require("./routes/migrate"))
 
-server.applyMiddleware({ app });
+server.applyMiddleware({ 
+    app
+});
 
-app.listen(() => {
-    console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)
+// driver connection
+const dbo = require('./conn/conn')
+
+app.listen(port, () => {
+    // connect to database when server starts
+    console.log(`🚀 Server ready at http://localhost:${port}${server.graphqlPath}`)
 })

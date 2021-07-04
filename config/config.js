@@ -1,10 +1,13 @@
 require('dotenv').config()
-require('../models/model')
 const mongoose = require('mongoose');
-const Listings = require('../models/model')
 
-let Data = Listings.find({}).limit(50)
+// mongodb atlass url
+const url = process.env.MONGO_STRING;
 
-console.log(Data)
+mongoose.connect(url, { 
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+});
 
-module.exports = Data
+mongoose.connection.once('open', () => console.log(`Connected to mongo Atlas`));
+
