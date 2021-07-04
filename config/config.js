@@ -1,11 +1,10 @@
 require('dotenv').config()
+require('../models/model')
 const mongoose = require('mongoose');
-mongoose.Promise = global.Promise;
+const Listings = require('../models/model')
 
-const url = process.env.MONGO_STRING;
+let Data = Listings.find({}).limit(50)
 
-mongoose.connect(url, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true 
-    });
-mongoose.connection.once('open', () => console.log(`Connected to mongo`));
+console.log(Data)
+
+module.exports = Data

@@ -1,27 +1,27 @@
 const mongoose = require('mongoose');
-const { Schema } = mongoose;
+const Schema = mongoose.Schema;
 
-const AmenitiesSchema = new Schema ({
+const AmenitiesSchema = new mongoose.Schema ({
     number: String
 });
 
-const GeoLocationSchema = new Schema ({
+const GeoLocationSchema = new mongoose.Schema ({
     number: Number
 });
 
-const ImagesSchema = new Schema ({
+const ImagesSchema = new mongoose.Schema ({
     thumbnail_url: String,
     medium_url: String,
     picture_url: String,
     xl_picture_url: String,
 });
 
-const LocationSchema = new Schema ({
+const LocationSchema = new mongoose.Schema ({
     type: String,
     coordinates: [GeoLocationSchema]
 });
 
-const AddressSchema = new Schema ({
+const AddressSchema = new mongoose.Schema ({
     street: String,
     suburb: String,
     government_area: String,
@@ -31,7 +31,7 @@ const AddressSchema = new Schema ({
     location: LocationSchema,
 });
 
-const HostSchema = new Schema ({
+const HostSchema = new mongoose.Schema ({
     host_id: String,
     host_url:String,
     host_name: String,
@@ -50,14 +50,14 @@ const HostSchema = new Schema ({
     host_verification: [AmenitiesSchema]
 });
 
-const AvailabilitySchema = new Schema ({
+const AvailabilitySchema = new mongoose.Schema ({
     availability_30: Number,
     availability_60: Number,
     availability_90: Number,
     availability_365: Number,
 });
 
-const ReviewScoresSchema = new Schema ({
+const ReviewScoresSchema = new mongoose.Schema ({
     review_scores_accuracy: Number,
     review_scores_cleanliness: Number,
     review_scores_checkin: Number,
@@ -67,7 +67,7 @@ const ReviewScoresSchema = new Schema ({
     review_scores_rating: Number,
 });
 
-const ReviewsSchema = new Schema ({
+const ReviewsSchema = new mongoose.Schema ({
     _id: String,
     date: String,
     listing_id: String,
@@ -76,7 +76,7 @@ const ReviewsSchema = new Schema ({
     comments: String,
 });
 
-const ListingSchema = new Schema ({
+const ListingSchema = new mongoose.Schema ({
     _id: String,
     listing_url: String,
     name: String,
@@ -121,9 +121,6 @@ const ListingSchema = new Schema ({
     reviews:  [ReviewsSchema]
 });
 
+const Listings = mongoose.model('listingsAndReviews', ListingSchema); 
 
-const Listings = mongoose.model('listings', ListingSchema); 
-
-module.exports = {
-  Listings
-};
+module.exports = Listings
