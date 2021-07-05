@@ -1,8 +1,10 @@
 require('dotenv').config()
 
+const connect = require('connect')
+
 const express = require('express');
 const cors = require('cors');
-const { ApolloServer, gql } = require('apollo-server-express');
+const { ApolloServer, graphqlExpress } = require('apollo-server-express');
 
 // grapqhl 
 const typeDefs = require('./schema/schema')
@@ -24,15 +26,22 @@ const app = express();
 // middleware
 app.use(cors())
 app.use(express.json())
-app.use(require("./routes/listings"))
+
+// app.use(
+//     '/listings',
+//     bodyParser.json(),
+//     graphqlExpress( req => { 
+//         schema: typeDefs
+//     })
+// )
 app.use(require("./routes/migrate"))
 
 server.applyMiddleware({ 
     app
 });
 
-// driver connection
-const dbo = require('./conn/conn')
+// // driver connection
+// const dbo = require('./conn/conn')
 
 app.listen(port, () => {
     // connect to database when server starts

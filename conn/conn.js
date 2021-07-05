@@ -3,6 +3,7 @@ const Db = process.env.MONGO_STRING
 const client = new MongoClient(Db, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    useFindAndModify: false
 });
 
 var _db;

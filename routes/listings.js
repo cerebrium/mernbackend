@@ -4,7 +4,7 @@ const express = require('express');
 const listings = express.Router()
 
 // get route for all records
-listings.route('/listings').get(function (req, res) {
+listings.route('/listings:id').post(function (req, res) {
     res.send('connected to the listings route')
 
 })
