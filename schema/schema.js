@@ -5,7 +5,10 @@ const typeDefs = gql`
     type Apartments {
         name: String,
         email: String,
-        location: String
+        location: String,
+        image: String,
+        description: String,
+        amenities: [String]
     }
 
     type Query {
@@ -13,7 +16,7 @@ const typeDefs = gql`
     }
 
     type Mutation {
-        addApartment(name: String!, email: String!, location: String!): Apartments
+        addApartment(name: String!, email: String!, location: String!, image: String!, description: String!, amenities: [String]!): Apartments
     }
 `;
   

@@ -3,9 +3,12 @@ const { Schema } = mongoose;
 
 const apartmentSchema = new Schema(
     {
-        name: String,
-        email: String,
-        location: String,
+      name: String,
+      email: String,
+      location: String,
+      image: String,
+      description: String,
+      amenities: [String]
     }
 )
 
