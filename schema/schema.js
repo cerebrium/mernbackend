@@ -3,7 +3,7 @@ require('../config/config')
 
 const typeDefs = gql`
     type Apartment {
-        _id: String
+        _id: ID
         name: String,
         email: String,
         location: String,

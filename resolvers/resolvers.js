@@ -2,7 +2,14 @@ const { Apartments } = require('../models/model')
 
 const resolvers = {
     Query: {
-        getApartments: async () => await Apartments.find({}).exec(),
+        getApartments: async () => {
+            try {
+                let response = await Apartments.find({}).exec()
+                return response
+            } catch(e) {
+                return e.message
+            }
+        },
         filteredApartments: async (_, args) => {
             try {
                 let response = await Apartments.find({
@@ -35,6 +42,7 @@ const resolvers = {
             }
         },
         updateApartment: async (_, args) => {
+            console.log("inside edit: ", args)
             try {
 
                 // map of updates to apply
