@@ -42,7 +42,6 @@ const resolvers = {
             }
         },
         updateApartment: async (_, args) => {
-            console.log("inside edit: ", args)
             try {
 
                 // map of updates to apply
